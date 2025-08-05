@@ -19,15 +19,15 @@ const EmailLogTable = ({ emails, setEmails }) => {
   useEffect(() => {
     async function fetchEmails() {
       const { data, error } = await supabase
-        .from('emails')
+        .from('email_logs')
         .select(`
           subject,
           body,
-          to_email,
-          from_email,
-          internal_date
+          to,
+          sender,
+          received_at
         `)
-       .order('internal_date', { ascending: false }); // Newest First
+       .order('received_at', { ascending: false }); // Newest First
       console.log('Supabase data:', data);
       console.log('Supabase error:', error);
 
@@ -110,11 +110,11 @@ const EmailLogTable = ({ emails, setEmails }) => {
   )}
 </TableCell>
 
-                  <TableCell>{row.to_email}</TableCell>
-                  <TableCell>{row.from_email}</TableCell>
+                  <TableCell>{row.to}</TableCell>
+                  <TableCell>{row.sender}</TableCell>
                   <TableCell>
                     {row.internal_date
-                      ? new Date(parseInt(row.internal_date)).toLocaleString()
+                      ? new Date(parseInt(row.received_at)).toLocaleString()
                       : 'N/A'}
                   </TableCell>
                   <TableCell>

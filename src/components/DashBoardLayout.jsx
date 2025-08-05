@@ -12,18 +12,20 @@ const DashboardLayout = () => {
   useEffect(() => {
     async function fetchEmails() {
       const { data, error } = await supabase
-        .from('emails')
+      
+        .from('email_logs')
         .select(`
           subject,
           body,
-          to_email,
-          from_email,
-          internal_date
+          to,
+          sender,
+          received_at
         `);
 
       if (error) {
         console.error('Error fetching emails:', error.message);
       } else {
+console.log("This is the data",data)
         setEmails(data || []);
       }
     }
