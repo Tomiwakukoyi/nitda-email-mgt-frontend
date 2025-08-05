@@ -1,7 +1,7 @@
-import DashboardLayout from '../components/DashBoardLayout';
+import DashBoardLayout from '../components/DashBoardLayout';
 
 function HomePage() {
-  return <DashboardLayout />;
+  return <DashBoardLayout/>;
 }
 
 export default HomePage;

@@ -38,9 +38,9 @@ const Topbar = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h5">Email Forwarding Dashboard</Typography>
         <Box display="flex" gap={1}>
-          <IconWithLabel icon={<FileUploadIcon/>} label="Export" />
+          {/* <IconWithLabel icon={<FileUploadIcon/>} label="Export" /> */}
           <IconWithLabel icon={<Refresh />} label="Refresh" />
-          <IconWithLabel icon={<Notifications />} />
+          {/* <IconWithLabel icon={<Notifications />} /> */}
         </Box>
       </Box>
     </Box>

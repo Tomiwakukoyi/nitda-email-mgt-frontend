@@ -1,17 +1,18 @@
+
 /* Container */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(to right, #f6f9fc, #e9f0ff);
+  /* background: linear-gradient(to right, #f6f9fc, #e9f0ff); */
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Login Card */
 .login-box {
-  background-color: #fff;
+  /* background-color: red; */
   padding: 40px;
   max-width: 400px;
   width: 100%;
@@ -112,6 +113,7 @@ input:focus {
   margin: 25px 0;
   color: #999;
   font-size: 14px;
+
 }
 
 .divider::before,
@@ -144,6 +146,23 @@ input:focus {
 
 .signup-link {
   font-weight: 600;
+}
+
+
+/* logo and menu */
+.logo-menu{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:30px;
+}
+.main-logo{
+  font: 600;
+  font-size: 18px;
+}
+.logo-subtitle{
+  font-size: 10px;
+  font: 300;
 }
 
 /* Responsive */

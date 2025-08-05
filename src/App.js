@@ -8,7 +8,6 @@ const AuthGate= () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
   useEffect(() => {
     fetch("http://127.0.0.1:8000/auth/me", {
       credentials: "include"
