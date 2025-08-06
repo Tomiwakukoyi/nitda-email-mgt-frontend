@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Login from './components/Login';
-import HomePage from './pages/HomePage';
+import HomePage from './components/HomePage';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
 const AuthGate= () => {

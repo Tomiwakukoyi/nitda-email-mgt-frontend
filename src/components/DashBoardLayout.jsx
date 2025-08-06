@@ -1,45 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import StatsGrid from './StatsGrid';
 import EmailLogTable from './EmailLogTable';
 import supabase from '../lib/supabaseClient';
+// import StatusBadge from './StatusBadge';
 
 const DashboardLayout = () => {
-  const [emails, setEmails] = useState([]);
+  const [email_logs, setEmails] = useState([]);
+
+  const fetchEmails = async () => {
+    const { data, error } = await supabase
+      .from('email_logs')
+      .select('subject, body, to, sender, received_at')
+      .order('received_at', { ascending: false });
+
+    if (!error) setEmails(data || []);
+    else console.error('Fetch error:', error.message);
+  };
 
   useEffect(() => {
-    async function fetchEmails() {
-      const { data, error } = await supabase
-      
-        .from('email_logs')
-        .select(`
-          subject,
-          body,
-          to,
-          sender,
-          received_at
-        `);
-
-      if (error) {
-        console.error('Error fetching emails:', error.message);
-      } else {
-console.log("This is the data",data)
-        setEmails(data || []);
-      }
-    }
-
     fetchEmails();
   }, []);
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <Box component="main" sx={{ flexGrow: 1, bgcolor: '#f9fafb', minHeight: '100vh', p: 3 }}>
-        <Topbar />
-        <StatsGrid totalEmails={emails.length} />
-        <EmailLogTable emails={emails} setEmails={setEmails} />
+        <Topbar onRefresh={fetchEmails} />
+        <StatsGrid totalEmails={email_logs.length} />
+        <EmailLogTable emails={email_logs} setEmails={setEmails} />
       </Box>
     </Box>
   );

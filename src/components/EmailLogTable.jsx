@@ -8,8 +8,9 @@ import {
 } from '@mui/material';
 import { MoreVert, Info, Send, Delete } from '@mui/icons-material';
 import SearchBar from './SearchBar';
+// import StatusBadge from './StatusBadge';
 
-const EmailLogTable = ({ emails, setEmails }) => {
+const EmailLogTable = ({ emails, setEmails, }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [expandedRows, setExpandedRows] = useState({});
   const [page, setPage] = useState(0);
@@ -25,7 +26,8 @@ const EmailLogTable = ({ emails, setEmails }) => {
           body,
           to,
           sender,
-          received_at
+          received_at,
+          status
         `)
        .order('received_at', { ascending: false }); // Newest First
       console.log('Supabase data:', data);
@@ -69,7 +71,7 @@ const EmailLogTable = ({ emails, setEmails }) => {
   return (
     <Box sx={{ border: '1px solid #ccc', borderRadius: 2, px: 2, py: 1, mt: 3 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={1} mt={1}>
-        <Typography variant="h5" sx={{ fontWeight: 600 }}>Email Forwarding Log</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 600 }}>Incoming Mails</Typography>
         <SearchBar />
       </Box>
       <TableContainer component={Paper}>
@@ -81,6 +83,9 @@ const EmailLogTable = ({ emails, setEmails }) => {
               <TableCell sx={{ fontWeight: 'bold' }}>To</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>From</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Received At</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Sent_at</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>AI Classification</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -113,14 +118,21 @@ const EmailLogTable = ({ emails, setEmails }) => {
                   <TableCell>{row.to}</TableCell>
                   <TableCell>{row.sender}</TableCell>
                   <TableCell>
-                    {row.internal_date
+                    {row.received_at
                       ? new Date(parseInt(row.received_at)).toLocaleString()
                       : 'N/A'}
                   </TableCell>
                   <TableCell>
-                    <IconButton size="small" onClick={(e) => handleMenuOpen(e, row)}>
-                      <MoreVert />
-                    </IconButton>
+                    <span>12:00</span>
+                  </TableCell>
+                  <TableCell>
+                    <span>For DG</span>
+                  </TableCell>
+                  <TableCell>
+                    {/* {row.status === 'read' ? 'Read' : 'Unread'} */}
+
+                      {/* STATUS BADGE ADJUSTMENT */}
+                    <span>{row.status === 'read' ? 'Treated' : 'Pending'}</span> 
                   </TableCell>
                 </TableRow>
               ))
@@ -139,26 +151,7 @@ const EmailLogTable = ({ emails, setEmails }) => {
         labelRowsPerPage=""     // Hide label
       />
 
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <MenuItem onClick={() => handleAction('View Details')}>
-          <ListItemIcon><Info fontSize="small" /></ListItemIcon>
-          <ListItemText>View Details</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => handleAction('Resend')}>
-          <ListItemIcon><Send fontSize="small" /></ListItemIcon>
-          <ListItemText>Resend</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => handleAction('Delete Log')}>
-          <ListItemIcon><Delete fontSize="small" /></ListItemIcon>
-          <ListItemText>Delete Log</ListItemText>
-        </MenuItem>
-      </Menu>
+      
     </Box>
   );
 };
